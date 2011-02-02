@@ -1,0 +1,17 @@
+12 people next to 12 numbered doors. A sign saying that there is one and only one safe door to exit.
+
+Talking to each of the people they will tell you:
+
+1) The safe door is either 1, 2, 3 or 4
+2) All even numbers tell the truth
+3) All multiples of 3 are liars
+4) The safe door is either 4, 5, 6 or 7
+5) #4 is telling the truth
+6) All odd numbers are lying
+7) The safe door is #8
+8) Door #8 is not safe
+9) #7 and #8 are both liars
+10) The safe door is #6
+11) The safe door is either 7, 10, 11 or 12
+12) All multiples of 3 tell the truth
+

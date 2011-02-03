@@ -246,6 +246,9 @@ package net.flashpunk.utils
 		{
 			// get the keycode and update the keystate
 			var code:int = e.keyCode;
+			
+			if (code < 0 || code > 255) return;
+			
 			if (_key[code])
 			{
 				_key[code] = false;

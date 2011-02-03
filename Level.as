@@ -23,6 +23,8 @@ package
 		
 		public var player:Entity;
 		
+		public const DOOR_COUNT:int = 10;
+		
 		public var doors:Array = [];
 		public var text:Array = [];
 		
@@ -51,7 +53,7 @@ package
 			addGraphic(black, -100);
 			addGraphic(red, -101);
 			
-			for (var i:int = 0; i <= 12; i++) {
+			for (var i:int = 0; i <= DOOR_COUNT; i++) {
 				var e:Entity = new Entity;
 				e.x = 100 + i*125;
 				e.y = 200;
@@ -72,20 +74,18 @@ package
 			
 			text[0].text +=  "There is only one safe door. Choose wisely!\"";
 			
-			text[1].text +=  "The safe door is either 1, 2, 3 or 4"; // false
+			text[1].text +=  "The safe door is #4"; // false
 			text[2].text +=  "All even numbered gargoyles tell the truth"; // false
 			text[3].text +=  "Every gargoyle which is a multiple of three is lying"; // false: impossible
-			text[4].text +=  "The safe door is either 4, 5, 6 or 7"; // false
-			text[5].text +=  "The gargoyle to my left is telling the truth"; // false
+			text[4].text +=  "This is the safe door!"; // false
+			text[5].text +=  "The safe door is #6"; // false
 			text[6].text +=  "All odd numbered gargoyles are lying"; // true
-			text[7].text +=  "The safe door is #8"; // false
-			text[8].text +=  "Door #8 is not safe"; // true
+			text[7].text +=  "The safe door has a lying gargoyle above it"; // false
+			text[8].text +=  "The safe door has a truthful gargoyle above it"; // true
 			text[9].text +=  "Gargoyles seven and eight are both liars"; // false: impossible
-			text[10].text += "The safe door is #6"; // false
-			text[11].text += "The safe door is either 7, 10, 11 or 12"; // false
-			text[12].text += "All gargoyles which are a multiple of three tell the truth"; // false: impossible
+			text[10].text += "The safe door is #3"; // false
 			
-			for (i = 1; i <= 12; i++) {
+			for (i = 1; i <= DOOR_COUNT; i++) {
 				text[i].text += "\"\n\nPress Z to open door " + i;
 			}
 			
@@ -114,7 +114,7 @@ package
 			
 			if (camera.x < 0) camera.x = 0;
 			
-			for (var i:int = 0; i <= 12; i++) {
+			for (var i:int = 0; i <= DOOR_COUNT; i++) {
 				text[i].alpha -= 0.05;
 				
 				if (player.collideWith(doors[i], player.x, player.y)) {
@@ -136,7 +136,7 @@ package
 			
 			// Note that 300 = 5s = length of door sfx
 
-			if (i == 9) { // Right door
+			if (i == 8) { // Right door
 				FP.tween(black, {alpha: 1}, 300);
 				FP.tween(musicSfx, {volume: 0}, 300, {complete: RoomCoreLogic.roomComplete});
 			} else { // Wrong door
@@ -156,7 +156,7 @@ package
 			
 			preventInput = false;
 			
-			for (var i:int = 0; i <= 12; i++) {
+			for (var i:int = 0; i <= DOOR_COUNT; i++) {
 				text[i].alpha = 0;
 			}
 			

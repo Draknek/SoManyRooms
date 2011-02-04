@@ -13,7 +13,8 @@ package
 		
 		public var black:Image;
 		public var red:Image;
-		public var black2:Image;
+		public var dark:Image;
+		public var light:Image;
 		
 		[Embed(source="audio/bg.mp3")]
 		public static var BgMusic:Class;
@@ -51,6 +52,9 @@ package
 		[Embed(source="images/player.png")]
 		public static var PlayerGfx:Class;
 		
+		[Embed(source="images/light.png")]
+		public static var LightGfx:Class;
+		
 		public var musicSfx:Sfx;
 		public var doorSfx:Sfx;
 		public var resetSfx:Sfx;
@@ -85,14 +89,26 @@ package
 			black = Image.createRect(640, 480, 0x000000); // for fading in/out
 			red = Image.createRect(640, 480, 0xFF0000); // for choosing the wrong door
 			
-			black2 = Image.createRect(640, 480, 0x000000); // for lighting
-			black2.alpha = 0.7;
-			black2.blend = "multiply";
+			dark = Image.createRect(640, 480, 0x000000); // for lighting
+			dark.alpha = 0.9;
+			dark.blend = "hardlight";
 			
-			addGraphic(black2, -25);
+			addGraphic(dark, -25);
+			
+			light = new Image(LightGfx);
+			light.color = 0xf1f09a;
+			light.centerOO();
+			light.alpha = 0.5;
+			//light.blend = "hardlight";
+			
+			light.x = 270;
+			light.y = 240;
+			
+			//addGraphic(light, -24);
+			light.render(dark.source, FP.zero, camera);
 			
 			black.scrollX = 0;
-			black2.scrollX = 0;
+			dark.scrollX = 0;
 			red.scrollX = 0;
 			
 			red.alpha = 0;
@@ -114,7 +130,7 @@ package
 			
 			addGraphic(entryDoor);
 			
-			entryDoor.scaleX = 0.9;
+			entryDoor.scaleX = 0.8;
 			
 			var firstGargoyle:Stamp = new Stamp(FP.choose([Gargoyle1Gfx, Gargoyle2Gfx, Gargoyle3Gfx, Gargoyle4Gfx]));
 			firstGargoyle.x = 135 + (firstGargoyle.width - 135)*0.5;
@@ -198,9 +214,33 @@ package
 		
 		public override function update():void 
 		{
+			var i:int;
+			
 			time++;
 			
-			black2.alpha = 0.7 + Math.sin(time / 600.0) * 0.1;
+			dark.source.fillRect(dark.source.rect, 0xFF000000);
+			
+			//light.alpha = 0.2 + Math.sin(time / 33.674635) * 0.05;
+			
+			light.x = player.x;
+			light.y = player.y + 40;
+			light.scaleX = FP.random * 0.05 + 0.9;
+			light.scaleY = FP.random * 0.05 + 0.9;
+			light.alpha = 0.5;
+			
+			light.render(dark.source, FP.zero, camera);
+			
+			/*for (i = 3; i < 12; i++) {
+				light.x = -3 + i* 135;
+				light.y = 300;
+				light.scaleX = FP.random * 0.03 + 0.4;
+				light.scaleY = FP.random * 0.03 + 0.4;
+				light.alpha = 0.2;
+			
+				light.render(dark.source, FP.zero, camera);
+			}*/
+			
+			dark.alpha = 0.8 + Math.sin(time / 600.0) * 0.05;
 			
 			if (preventInput) return;
 			
@@ -239,7 +279,7 @@ package
 			if (camera.x < 0) camera.x = 0;
 			if (camera.x > maxX - 640) camera.x = maxX - 640;
 			
-			for (var i:int = 0; i <= DOOR_COUNT; i++) {
+			for (i = 0; i <= DOOR_COUNT; i++) {
 				text[i].alpha -= 0.05;
 				openDoorText[i].alpha -= 0.05;
 				Image(doors[i].graphic).scaleX = 1.0;
@@ -267,7 +307,7 @@ package
 			
 			// Note that 300 = 5s = length of door sfx
 			
-			FP.tween(doors[i].graphic, {scaleX: 0.9}, 300);
+			FP.tween(doors[i].graphic, {scaleX: 0.8}, 300);
 
 			if (i == 8) { // Right door
 				FP.tween(black, {alpha: 1}, 300);
@@ -293,6 +333,7 @@ package
 			
 			for (var i:int = 0; i <= DOOR_COUNT; i++) {
 				text[i].alpha = 0;
+				openDoorText[i].alpha = 0;
 			}
 			
 			FP.tween(red, {alpha: 0}, 30);

@@ -172,7 +172,7 @@ package
 					gargoyles[i] = gargoyle;
 				}
 				
-				var t:Text = new Text("", 0, 16 + 22, {align:"center", width:640, font:"gargoylefont", size:24, color: 0xFF4444});
+				var t:Text = new Text("", 0, 16 + 22, {align:"center", width:640, font:"gargoylefont", size:((i == 0) ? 24 : 32), color: 0xFF4444});
 				
 				t.scale = 0;
 				
@@ -251,7 +251,7 @@ package
 				light.render(dark.source, FP.zero, camera);
 			}*/
 			
-			dark.alpha = 0.8 + Math.sin(time / 600.0) * 0.05;
+			dark.alpha = 0.7 + Math.sin(time / 600.0) * 0.05;
 			
 			if (preventInput) return;
 			

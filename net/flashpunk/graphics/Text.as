@@ -134,7 +134,7 @@
 		/** Updates the text buffer, which is the source for the image buffer. */
 		public function updateTextBuffer():void
 		{
-			_field.setTextFormat(_form);
+			//_field.setTextFormat(_form);
 			_field.width = _width;
 			_textWidth = _field.textWidth + 4;
 			_textHeight = _field.textHeight + 4;
@@ -163,7 +163,7 @@
 			_field.width = _width;
 			_field.height = _height;
 			
-			var offsetRequired: Boolean = false;
+			/*var offsetRequired: Boolean = false;
 			
 			for (var i: int = 0; i < _field.numLines; i++) {
 				var tlm: TextLineMetrics = _field.getLineMetrics(i);
@@ -187,7 +187,7 @@
 					
 					_source.draw(_field, _field.transform.matrix, null, null, FP.rect);
 				}
-			} else {
+			} else */ {
 				_source.draw(_field);
 			}
 			
@@ -300,7 +300,7 @@
 		public function get textHeight():uint { return _textHeight; }
 		
 		// Text information.
-		/** @private */ private var _field:TextField = new TextField;
+		/** @private */ public var _field:TextField = new TextField;
 		/** @private */ private var _width:uint;
 		/** @private */ private var _height:uint;
 		/** @private */ private var _textWidth:uint;

@@ -112,6 +112,7 @@
 			_height = height || _field.textHeight + 4;
 			_source = new BitmapData(_width, _height, true, 0);
 			super(_source);
+			updateTextBuffer();
 			this.x = x;
 			this.y = y;
 			

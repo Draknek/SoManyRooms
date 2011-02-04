@@ -94,7 +94,7 @@ package
 			
 			addGraphic(bg);
 			
-			addGraphic(new Stamp(BeginGfx, 0, 480 - 341));
+			addGraphic(new Stamp(BeginGfx, 0, 0));
 			
 			var entryDoor:Image = new Image(DoorGfx);
 			entryDoor.x = 7;

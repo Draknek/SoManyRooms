@@ -28,6 +28,9 @@ package
 		[Embed(source="images/doorway.jpg")]
 		public static var BgGfx:Class;
 		
+		[Embed(source="images/doorway-start.jpg")]
+		public static var BeginGfx:Class;
+		
 		[Embed(source="images/door.png")]
 		public static var DoorGfx:Class;
 		
@@ -78,6 +81,8 @@ package
 			bg.y = 480 - bg.height;
 			
 			addGraphic(bg);
+			
+			addGraphic(new Stamp(BeginGfx, 0, 480 - 341));
 			
 			for (var i:int = 0; i <= DOOR_COUNT; i++) {
 				var e:Entity = new Entity;
@@ -162,11 +167,16 @@ package
 			
 			sprite.frame = walk % 8;
 			
-			if (player.x < 0) player.x = 0;
+			if (player.x < 30) player.x = 30;
+			
+			var maxX:Number = doors[10].x + doors[10].width + 15;
+			
+			if (player.x > maxX - 30) player.x = maxX - 30;
 			
 			camera.x = player.x - 320;
 			
 			if (camera.x < 0) camera.x = 0;
+			if (camera.x > maxX - 640) camera.x = maxX - 640;
 			
 			for (var i:int = 0; i <= DOOR_COUNT; i++) {
 				text[i].alpha -= 0.05;

@@ -39,6 +39,8 @@ package
 		public var resetSfx:Sfx;
 		
 		public var player:Entity;
+		public var sprite:Spritemap;
+		public var walk:Number = 0;
 		
 		public const DOOR_COUNT:int = 10;
 		
@@ -119,9 +121,13 @@ package
 			player = new Entity;
 			player.width = 80;
 			player.height = 125;
-			player.x = startX;
+			player.x = startX + player.width*0.5;
 			player.y = 480 - player.height;
-			player.graphic = new Spritemap(PlayerGfx, player.width, player.height);
+			
+			sprite = new Spritemap(PlayerGfx, player.width, player.height);
+			sprite.x = -30;
+			
+			player.graphic = sprite;
 			
 			add(player);
 			
@@ -132,12 +138,33 @@ package
 		{
 			if (preventInput) return;
 			
-			if (Input.check(Key.LEFT)) player.x -= 4;
-			if (Input.check(Key.RIGHT)) player.x += 4;
+			var dx:int = 0;
+			
+			if (Input.check(Key.LEFT)) {
+				sprite.flipped = true;
+				sprite.x = -50;
+				player.x -= 2;
+				walk += 0.15;
+				dx = -1;
+			}
+			
+			if (Input.check(Key.RIGHT)) {
+				sprite.flipped = false;
+				sprite.x = -30;
+				player.x += 2;
+				walk += 0.15;
+				dx = 1;
+			}
+			
+			if (dx == 0) {
+				walk = 0.8;
+			}
+			
+			sprite.frame = walk % 8;
 			
 			if (player.x < 0) player.x = 0;
 			
-			camera.x = player.x - (640 - player.width)*0.5;
+			camera.x = player.x - 320;
 			
 			if (camera.x < 0) camera.x = 0;
 			
@@ -145,7 +172,7 @@ package
 				text[i].alpha -= 0.05;
 				openDoorText[i].alpha -= 0.05;
 				
-				if (player.collideWith(doors[i], player.x, player.y)) {
+				if (doors[i].collidePoint(doors[i].x, doors[i].y, player.x, player.y)) {
 					text[i].alpha += 0.1;
 					
 					if (i != 0)

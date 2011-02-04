@@ -34,6 +34,18 @@ package
 		[Embed(source="images/door.png")]
 		public static var DoorGfx:Class;
 		
+		[Embed(source="images/plinth.png")]
+		public static var PlinthGfx:Class;
+		
+		[Embed(source="images/gargoyle1.png")]
+		public static var Gargoyle1Gfx:Class;
+		[Embed(source="images/gargoyle2.png")]
+		public static var Gargoyle2Gfx:Class;
+		[Embed(source="images/gargoyle3.png")]
+		public static var Gargoyle3Gfx:Class;
+		[Embed(source="images/gargoyle4.png")]
+		public static var Gargoyle4Gfx:Class;
+		
 		[Embed(source="images/player.png")]
 		public static var PlayerGfx:Class;
 		
@@ -51,7 +63,7 @@ package
 		public var text:Array = [];
 		public var openDoorText:Array = [];
 		
-		public var startX:Number = 25;
+		public var startX:Number = 20;
 		
 		public override function begin():void 
 		{
@@ -84,17 +96,49 @@ package
 			
 			addGraphic(new Stamp(BeginGfx, 0, 480 - 341));
 			
+			var entryDoor:Image = new Image(DoorGfx);
+			entryDoor.x = 7;
+			entryDoor.y = 480 - 163;
+			entryDoor.smooth = true;
+			
+			addGraphic(entryDoor);
+			
+			entryDoor.scaleX = 0.9;
+			
+			var firstGargoyle:Stamp = new Stamp(FP.choose([Gargoyle1Gfx, Gargoyle2Gfx, Gargoyle3Gfx, Gargoyle4Gfx]));
+			firstGargoyle.x = 135 + (firstGargoyle.width - 135)*0.5;
+			firstGargoyle.y = 480 - firstGargoyle.height + 20;
+			addGraphic(firstGargoyle);
+			
 			for (var i:int = 0; i <= DOOR_COUNT; i++) {
 				var e:Entity = new Entity;
 				e.width = 114;
 				e.height = 163;
-				e.x = 270 + 7 + i*135;
+				e.x = 135 + 7 + i*135;
 				e.y = 480 - e.height;
 				e.graphic = new Image(DoorGfx);
+				Image(e.graphic).smooth = true;
+				
+				if (i == 0) e.graphic.visible = false;
 				
 				doors.push(e);
 				
 				add(e);
+				
+				if (i != 0) {
+					var plinth:Spritemap = new Spritemap(PlinthGfx, 78, 51);
+					plinth.frame = i-1;
+					plinth.x = e.x - (plinth.width - e.width)*0.5;
+					plinth.y = e.y - plinth.height - 5 - FP.rand(10);
+					addGraphic(plinth);
+					
+					var gargoyle:Stamp = new Stamp(FP.choose([Gargoyle1Gfx, Gargoyle2Gfx, Gargoyle3Gfx, Gargoyle4Gfx]));
+					
+					gargoyle.x = e.x - (gargoyle.width - e.width)*0.5;
+					gargoyle.y = plinth.y - gargoyle.height + 20;
+					
+					addGraphic(gargoyle);
+				}
 				
 				var t:Text = new Text("", 0, 16 + 22, {align:"center", width:640, scrollX:0, alpha: 0, font:"gargoylefont", size:24, color: 0xFF4444});
 				
@@ -102,7 +146,7 @@ package
 				
 				addGraphic(t);
 				
-				t = new Text("Press Z\nto open door " + i, 0, 480 - 160, {align:"center", alpha: 0});
+				t = new Text("Z\nto open", 0, 480 - 160 + 8, {align:"center", alpha: 0});
 				t.x = e.x - (t.width - e.width)*0.5;
 				
 				openDoorText.push(t);
@@ -137,6 +181,8 @@ package
 			add(player);
 			
 			FP.tween(black, {alpha: 0}, 120);
+			
+			FP.tween(entryDoor, {scaleX: 1.0}, 300);
 		}
 		
 		public override function update():void 
@@ -181,12 +227,14 @@ package
 			for (var i:int = 0; i <= DOOR_COUNT; i++) {
 				text[i].alpha -= 0.05;
 				openDoorText[i].alpha -= 0.05;
+				Image(doors[i].graphic).scaleX = 1.0;
 				
 				if (doors[i].collidePoint(doors[i].x, doors[i].y, player.x, player.y)) {
 					text[i].alpha += 0.1;
 					
 					if (i != 0)
 					{
+						Image(doors[i].graphic).scaleX = 0.96;
 						openDoorText[i].alpha += 0.1;
 						if (Input.pressed(Key.Z) || Input.pressed(Key.X)) {
 							openDoor(i);
@@ -203,6 +251,8 @@ package
 			preventInput = true;
 			
 			// Note that 300 = 5s = length of door sfx
+			
+			FP.tween(doors[i].graphic, {scaleX: 0.9}, 300);
 
 			if (i == 8) { // Right door
 				FP.tween(black, {alpha: 1}, 300);

@@ -67,6 +67,8 @@ package
 		
 		public var startX:Number = 20;
 		
+		public var time:Number = 0;
+		
 		public override function begin():void 
 		{
 			RoomCoreLogic.roomBegins(); //this tells container room has now begun
@@ -196,6 +198,10 @@ package
 		
 		public override function update():void 
 		{
+			time++;
+			
+			black2.alpha = 0.7 + Math.sin(time / 600.0) * 0.1;
+			
 			if (preventInput) return;
 			
 			var dx:int = 0;

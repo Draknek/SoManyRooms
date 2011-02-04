@@ -31,6 +31,9 @@ package
 		[Embed(source="images/door.png")]
 		public static var DoorGfx:Class;
 		
+		[Embed(source="images/player.png")]
+		public static var PlayerGfx:Class;
+		
 		public var musicSfx:Sfx;
 		public var doorSfx:Sfx;
 		public var resetSfx:Sfx;
@@ -124,11 +127,11 @@ package
 			}
 			
 			player = new Entity;
+			player.width = 80;
+			player.height = 125;
 			player.x = startX;
-			player.y = 205;
-			player.width = 20;
-			player.height = 40;
-			player.graphic = Image.createRect(20, 40, 0x0000FF);
+			player.y = 480 - player.height;
+			player.graphic = new Spritemap(PlayerGfx, player.width, player.height);
 			
 			add(player);
 			

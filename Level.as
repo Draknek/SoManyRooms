@@ -125,7 +125,7 @@ package
 				if (player.collideWith(doors[i], player.x, player.y)) {
 					text[i].alpha += 0.1;
 					
-					if (i != 0 && Input.pressed(Key.Z))
+					if (i != 0 && (Input.pressed(Key.Z) || Input.pressed(Key.X)))
 					{
 						openDoor(i);
 					}

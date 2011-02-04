@@ -70,7 +70,7 @@ package
 				
 				add(e);
 				
-				var t:Text = new Text("The gargoyle whispers to you:\n\"", 0, 400, {align:"center", width:640, scrollX:0, alpha: 0});
+				var t:Text = new Text("The gargoyle whispers to you:\n\n\"", 0, 380, {align:"center", width:640, scrollX:0, alpha: 0});
 				
 				text.push(t);
 				
@@ -93,6 +93,8 @@ package
 			for (i = 1; i <= DOOR_COUNT; i++) {
 				text[i].text += "\"\n\nPress Z to open door #" + i;
 			}
+			
+			text[0].y -= 16;
 			
 			player = new Entity;
 			player.x = startX;

@@ -78,6 +78,8 @@ package
 		{
 			RoomCoreLogic.roomBegins(); //this tells container room has now begun
 			
+			camera.y = 22;
+			
 			super.begin();
 			
 			musicSfx = new Sfx(BgMusic);
@@ -111,6 +113,9 @@ package
 			black.scrollX = 0;
 			dark.scrollX = 0;
 			red.scrollX = 0;
+			black.scrollY = 0;
+			dark.scrollY = 0;
+			red.scrollY = 0;
 			
 			red.alpha = 0;
 			
@@ -118,11 +123,11 @@ package
 			addGraphic(red, -101);
 			
 			var bg:Backdrop = new Backdrop(BgGfx, true, false);
-			bg.y = 480 - bg.height;
+			bg.y = 22;
 			
 			addGraphic(bg);
 			
-			addGraphic(new Stamp(BeginGfx, 0, 0));
+			addGraphic(new Stamp(BeginGfx, 0, 22));
 			
 			var entryDoor:Image = new Image(DoorGfx);
 			entryDoor.x = 7;

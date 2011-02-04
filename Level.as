@@ -3,6 +3,7 @@ package
 	import net.flashpunk.*;
 	import net.flashpunk.graphics.*;
 	import net.flashpunk.utils.*;
+	import net.flashpunk.tweens.misc.*;
 	import flash.text.*;
 	import roomCore.RoomCoreLogic;
 
@@ -12,6 +13,7 @@ package
 		
 		public var black:Image;
 		public var red:Image;
+		public var black2:Image;
 		
 		[Embed(source="audio/bg.mp3")]
 		public static var BgMusic:Class;
@@ -81,7 +83,14 @@ package
 			black = Image.createRect(640, 480, 0x000000); // for fading in/out
 			red = Image.createRect(640, 480, 0xFF0000); // for choosing the wrong door
 			
+			black2 = Image.createRect(640, 480, 0x000000); // for lighting
+			black2.alpha = 0.7;
+			black2.blend = "multiply";
+			
+			addGraphic(black2, -25);
+			
 			black.scrollX = 0;
+			black2.scrollX = 0;
 			red.scrollX = 0;
 			
 			red.alpha = 0;
@@ -144,14 +153,14 @@ package
 				
 				text.push(t);
 				
-				addGraphic(t);
+				addGraphic(t, -50);
 				
 				t = new Text("Z\nto open", 0, 480 - 160 + 8, {align:"center", alpha: 0});
 				t.x = e.x - (t.width - e.width)*0.5;
 				
 				openDoorText.push(t);
 				
-				addGraphic(t);
+				addGraphic(t, -50);
 			}
 			
 			text[0].text =  "Just one door is all it takes\nTo send you on your way\nBut heed our warning truths and lies\nOr here you might well stay";
@@ -162,8 +171,8 @@ package
 			text[4].text +=  "This door is the way out!"; // false
 			text[5].text +=  "Door 6 is the only safe one"; // false
 			text[6].text +=  "All odd numbered gargoyles are lying"; // true
-			text[7].text +=  "The safe door has a lying gargoyle above it"; // false
-			text[8].text +=  "The safe door has a truthful gargoyle above it"; // true
+			text[7].text +=  "The exit has a lying gargoyle above it"; // false
+			text[8].text +=  "The exit has a truthful gargoyle above it"; // true
 			text[9].text +=  "Gargoyles seven and eight are both liars"; // false: impossible
 			text[10].text += "The exit is door 3"; // false
 			

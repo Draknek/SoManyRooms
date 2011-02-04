@@ -25,6 +25,12 @@ package
 		[Embed(source = 'fonts/Frank Knows.ttf', embedAsCFF="false", fontFamily = 'gargoylefont')]
 		public static var GargoyleFont:Class;
 		
+		[Embed(source="images/doorway.jpg")]
+		public static var BgGfx:Class;
+		
+		[Embed(source="images/door.png")]
+		public static var DoorGfx:Class;
+		
 		public var musicSfx:Sfx;
 		public var doorSfx:Sfx;
 		public var resetSfx:Sfx;
@@ -62,13 +68,18 @@ package
 			addGraphic(black, -100);
 			addGraphic(red, -101);
 			
+			var bg:Backdrop = new Backdrop(BgGfx, true, false);
+			bg.y = 480 - bg.height;
+			
+			addGraphic(bg);
+			
 			for (var i:int = 0; i <= DOOR_COUNT; i++) {
 				var e:Entity = new Entity;
-				e.x = 100 + i*125;
-				e.y = 200;
-				e.width = 50;
-				e.height = 50;
-				e.graphic = Image.createRect(50, 50, 0x00FF00);
+				e.width = 114;
+				e.height = 163;
+				e.x = 270 + 7 + i*135;
+				e.y = 480 - e.height;
+				e.graphic = new Image(DoorGfx);
 				
 				doors.push(e);
 				

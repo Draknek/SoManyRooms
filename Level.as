@@ -18,8 +18,12 @@ package
 		[Embed(source="audio/door.mp3")]
 		public static var DoorSfx:Class;
 		
+		[Embed(source="audio/reset.mp3")]
+		public static var ResetSfx:Class;
+		
 		public var musicSfx:Sfx;
 		public var doorSfx:Sfx;
+		public var resetSfx:Sfx;
 		
 		public var player:Entity;
 		
@@ -38,6 +42,7 @@ package
 			
 			musicSfx = new Sfx(BgMusic);
 			doorSfx = new Sfx(DoorSfx);
+			resetSfx = new Sfx(ResetSfx);
 			
 			musicSfx.loop();
 			doorSfx.play();
@@ -148,6 +153,8 @@ package
 		public function reset ():void
 		{
 			FP.tweener.clearTweens();
+			
+			resetSfx.play();
 			
 			red.alpha = 1;
 			black.alpha = 0;

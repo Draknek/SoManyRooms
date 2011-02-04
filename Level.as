@@ -68,6 +68,7 @@ package
 		public var doors:Array = [];
 		public var text:Array = [];
 		public var openDoorText:Array = [];
+		public var gargoyles:Array = [];
 		
 		public var startX:Number = 20;
 		
@@ -137,6 +138,8 @@ package
 			firstGargoyle.y = 480 - firstGargoyle.height + 20;
 			addGraphic(firstGargoyle);
 			
+			gargoyles[0] = firstGargoyle;
+			
 			for (var i:int = 0; i <= DOOR_COUNT; i++) {
 				var e:Entity = new Entity;
 				e.width = 114;
@@ -165,9 +168,13 @@ package
 					gargoyle.y = plinth.y - gargoyle.height + 20;
 					
 					addGraphic(gargoyle);
+					
+					gargoyles[i] = gargoyle;
 				}
 				
-				var t:Text = new Text("", 0, 16 + 22, {align:"center", width:640, scrollX:0, alpha: 0, font:"gargoylefont", size:24, color: 0xFF4444});
+				var t:Text = new Text("", 0, 16 + 22, {align:"center", width:640, font:"gargoylefont", size:24, color: 0xFF4444});
+				
+				t.scale = 0;
 				
 				text.push(t);
 				
@@ -193,6 +200,10 @@ package
 			text[8].text +=  "The exit has a truthful gargoyle above it"; // true
 			text[9].text +=  "Gargoyles seven and eight are both liars"; // false: impossible
 			text[10].text += "The exit is door 3"; // false
+			
+			for (i = 0; i <= 10; i++) {
+				text[i].centerOO();
+			}
 			
 			player = new Entity;
 			player.width = 80;
@@ -280,12 +291,15 @@ package
 			if (camera.x > maxX - 640) camera.x = maxX - 640;
 			
 			for (i = 0; i <= DOOR_COUNT; i++) {
-				text[i].alpha -= 0.05;
+				text[i].scale -= 0.04;
+				if (text[i].scale < 0) text[i].scale = 0;
+				
 				openDoorText[i].alpha -= 0.05;
 				Image(doors[i].graphic).scaleX = 1.0;
 				
 				if (doors[i].collidePoint(doors[i].x, doors[i].y, player.x, player.y)) {
-					text[i].alpha += 0.1;
+					text[i].scale += (i == 0) ? 0.06 : 0.07;
+					if (text[i].scale > 1) text[i].scale = 1;
 					
 					if (i != 0)
 					{
@@ -296,6 +310,9 @@ package
 						}
 					}
 				}
+				
+				text[i].x = FP.lerp(doors[i].x + doors[i].width*0.5, camera.x+320, text[i].scale*text[i].scale);
+				text[i].y = FP.lerp(gargoyles[i].y + 40, 100, text[i].scale*text[i].scale);
 			}
 		}
 		
@@ -332,7 +349,7 @@ package
 			preventInput = false;
 			
 			for (var i:int = 0; i <= DOOR_COUNT; i++) {
-				text[i].alpha = 0;
+				text[i].scale = 0;
 				openDoorText[i].alpha = 0;
 			}
 			

@@ -77,21 +77,21 @@ package
 				addGraphic(t);
 			}
 			
-			text[0].text +=  "There is only one safe door. Choose wisely!\"";
+			text[0].text +=  "Just one door is all it takes\nTo send you on your way\nBut heed our warning truths and lies\nOr here you might well stay\"";
 			
-			text[1].text +=  "The safe door is #4"; // false
+			text[1].text +=  "You want to go through door #4"; // false
 			text[2].text +=  "All even numbered gargoyles tell the truth"; // false
 			text[3].text +=  "Every gargoyle which is a multiple of three is lying"; // false: impossible
-			text[4].text +=  "This is the safe door!"; // false
-			text[5].text +=  "The safe door is #6"; // false
+			text[4].text +=  "This door is the way out!"; // false
+			text[5].text +=  "Door #6 is the only safe one"; // false
 			text[6].text +=  "All odd numbered gargoyles are lying"; // true
 			text[7].text +=  "The safe door has a lying gargoyle above it"; // false
 			text[8].text +=  "The safe door has a truthful gargoyle above it"; // true
 			text[9].text +=  "Gargoyles seven and eight are both liars"; // false: impossible
-			text[10].text += "The safe door is #3"; // false
+			text[10].text += "The exit is door #3"; // false
 			
 			for (i = 1; i <= DOOR_COUNT; i++) {
-				text[i].text += "\"\n\nPress Z to open door " + i;
+				text[i].text += "\"\n\nPress Z to open door #" + i;
 			}
 			
 			player = new Entity;

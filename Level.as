@@ -133,13 +133,6 @@ package
 			
 			entryDoor.scaleX = 0.8;
 			
-			var firstGargoyle:Stamp = new Stamp(FP.choose([Gargoyle1Gfx, Gargoyle2Gfx, Gargoyle3Gfx, Gargoyle4Gfx]));
-			firstGargoyle.x = 135 + (firstGargoyle.width - 135)*0.5;
-			firstGargoyle.y = 480 - firstGargoyle.height + 20;
-			addGraphic(firstGargoyle);
-			
-			gargoyles[0] = firstGargoyle;
-			
 			for (var i:int = 0; i <= DOOR_COUNT; i++) {
 				var e:Entity = new Entity;
 				e.width = 114;
@@ -155,24 +148,24 @@ package
 				
 				add(e);
 				
-				if (i != 0) {
-					var plinth:Spritemap = new Spritemap(PlinthGfx, 78, 51);
-					plinth.frame = i-1;
-					plinth.x = e.x - (plinth.width - e.width)*0.5;
-					plinth.y = e.y - plinth.height - 5 - FP.rand(10);
-					addGraphic(plinth);
-					
-					var gargoyle:Stamp = new Stamp(FP.choose([Gargoyle1Gfx, Gargoyle2Gfx, Gargoyle3Gfx, Gargoyle4Gfx]));
-					
-					gargoyle.x = e.x - (gargoyle.width - e.width)*0.5;
-					gargoyle.y = plinth.y - gargoyle.height + 20;
-					
-					addGraphic(gargoyle);
-					
-					gargoyles[i] = gargoyle;
-				}
+				var plinth:Spritemap = new Spritemap(PlinthGfx, 78, 51);
+				plinth.frame = i;
+				plinth.x = e.x - (plinth.width - e.width)*0.5;
+				plinth.y = e.y - plinth.height - 5 - FP.rand(10);
+				addGraphic(plinth);
 				
-				var t:Text = new Text("", 0, 16 + 22, {align:"center", width:640, font:"gargoylefont", size:((i == 0) ? 24 : 32), color: 0xFF4444});
+				if (i == 0) plinth.y = 400;
+				
+				var gargoyle:Stamp = new Stamp(FP.choose([Gargoyle1Gfx, Gargoyle2Gfx, Gargoyle3Gfx, Gargoyle4Gfx]));
+				
+				gargoyle.x = e.x - (gargoyle.width - e.width)*0.5;
+				gargoyle.y = plinth.y - gargoyle.height + 20;
+				
+				addGraphic(gargoyle);
+				
+				gargoyles[i] = gargoyle;
+				
+				var t:Text = new Text("", 0, 16 + 22, {align:"center", width:640, font:"gargoylefont", size:((i == 0) ? 24 : 32), color: 0xDD2222});
 				
 				t.scale = 0;
 				
@@ -298,7 +291,7 @@ package
 				Image(doors[i].graphic).scaleX = 1.0;
 				
 				if (doors[i].collidePoint(doors[i].x, doors[i].y, player.x, player.y)) {
-					text[i].scale += (i == 0) ? 0.06 : 0.07;
+					text[i].scale += 0.07;
 					if (text[i].scale > 1) text[i].scale = 1;
 					
 					if (i != 0)
@@ -311,8 +304,11 @@ package
 					}
 				}
 				
-				text[i].x = FP.lerp(doors[i].x + doors[i].width*0.5, camera.x+320, text[i].scale*text[i].scale);
-				text[i].y = FP.lerp(gargoyles[i].y + 40, 100, text[i].scale*text[i].scale);
+				
+				var targetX:Number = (i == 0) ? 180 : camera.x+320;
+				var targetY:Number = (i == 0) ? 180 : 100;
+				text[i].x = FP.lerp(doors[i].x + doors[i].width*0.5, targetX, text[i].scale*text[i].scale);
+				text[i].y = FP.lerp(gargoyles[i].y + 40, targetY, text[i].scale*text[i].scale);
 			}
 		}
 		

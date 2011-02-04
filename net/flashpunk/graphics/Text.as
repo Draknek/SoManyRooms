@@ -131,8 +131,8 @@
 			}
 		}
 		
-		/** @private Updates the drawing buffer. */
-		override public function updateBuffer(clearBefore:Boolean = false):void
+		/** Updates the text buffer, which is the source for the image buffer. */
+		public function updateTextBuffer():void
 		{
 			_field.setTextFormat(_form);
 			_field.width = _width;
@@ -191,7 +191,7 @@
 				_source.draw(_field);
 			}
 			
-			super.updateBuffer(clearBefore);
+			super.updateBuffer();
 		}
 		
 		/** @private Centers the Text's originX/Y to its center. */
@@ -209,7 +209,7 @@
 		{
 			if (_text == value) return;
 			_field.text = _text = value;
-			updateBuffer();
+			updateTextBuffer();
 		}
 		
 		/**
@@ -220,7 +220,7 @@
 		{
 			if (_font == value) return;
 			_form.font = _font = value;
-			updateBuffer();
+			updateTextBuffer();
 		}
 		
 		/**
@@ -231,7 +231,7 @@
 		{
 			if (_size == value) return;
 			_form.size = _size = value;
-			updateBuffer();
+			updateTextBuffer();
 		}
 		
 		/**
@@ -243,7 +243,7 @@
 		{
 			if (_align == value) return;
 			_form.align = _align = value;
-			updateBuffer();
+			updateTextBuffer();
 		}
 		
 		/**
@@ -254,7 +254,7 @@
 		{
 			if (_wordWrap == value) return;
 			_field.wordWrap = _wordWrap = value;
-			updateBuffer();
+			updateTextBuffer();
 		}
 		
 		/**
@@ -265,7 +265,7 @@
 		{
 			if (_width == value) return;
 			_width = value;
-			updateBuffer();
+			updateTextBuffer();
 		}
 		
 		/**
@@ -276,7 +276,7 @@
 		{
 			if (_height == value) return;
 			_height = value;
-			updateBuffer();
+			updateTextBuffer();
 		}
 		
 		/**

@@ -87,7 +87,7 @@
 		/** @private Event handler for sound completion. */
 		private function onComplete(e:Event = null):void
 		{
-			if (_looping) loop(_vol, _pan);
+			if (_looping) FP.tween(this, {}, FP.rand(90)+30, {complete: function ():void {loop(_vol, _pan);}}); // HACKITY HACK HACK
 			else stop();
 			_position = 0;
 			if (complete != null) complete();

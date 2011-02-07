@@ -19,16 +19,17 @@ for line in input:
 	parts = line.strip().split(" ")
 	
 	filename = parts[0]
-	action = "normal"
+	quality = parts[1]
+	alpha = "normal"
 	
-	if (len(parts) > 1):
-		action = parts[1]
+	if (len(parts) > 2):
+		alpha = parts[2]
 	
-	if (action != 'magic'):
-		run('convert -quality 60 orig/' + filename + '.png jpg/' + filename + '.jpg');
+	if (quality != 'nojpg'):
+		run('convert -quality ' + quality + ' orig/' + filename + '.png jpg/' + filename + '.jpg');
 		embed += '[Embed(source="images/jpg/' + filename + '.jpg")] public static var ' + filename.replace('-', '_') + 'JPG:Class;\n'
 	
-	if (action != 'noalpha'):
+	if (alpha != 'noalpha'):
 		run('convert -alpha extract orig/' + filename + '.png alpha/' + filename + '.png');
 		embed += '[Embed(source="images/alpha/' + filename + '.png")] public static var ' + filename.replace('-', '_') + 'ALPHA:Class;\n'
 	

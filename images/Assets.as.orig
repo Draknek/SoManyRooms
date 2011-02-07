@@ -11,8 +11,6 @@ package
 		{
 			if (cache[name]) return cache[name];
 			
-			trace(name);
-			
 			var imageClass:Class = Assets[name + 'JPG'];
 			var alphaClass:Class = Assets[name + 'ALPHA'];
 			

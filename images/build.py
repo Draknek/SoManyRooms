@@ -25,13 +25,15 @@ for line in input:
 	if (len(parts) > 2):
 		alpha = parts[2]
 	
-	if (quality != 'nojpg'):
+	if (quality == 'nojpg'):
+		embed += '[Embed(source="images/orig/' + filename + '.png")] public static var ' + filename.replace('-', '_') + 'ALPHA:Class;\n'
+	else:
 		run('convert -quality ' + quality + ' orig/' + filename + '.png jpg/' + filename + '.jpg');
 		embed += '[Embed(source="images/jpg/' + filename + '.jpg")] public static var ' + filename.replace('-', '_') + 'JPG:Class;\n'
-	
-	if (alpha != 'noalpha'):
-		run('convert -alpha extract orig/' + filename + '.png alpha/' + filename + '.png');
-		embed += '[Embed(source="images/alpha/' + filename + '.png")] public static var ' + filename.replace('-', '_') + 'ALPHA:Class;\n'
+		
+		if (alpha != 'noalpha'):
+			run('convert -alpha extract orig/' + filename + '.png alpha/' + filename + '.png');
+			embed += '[Embed(source="images/alpha/' + filename + '.png")] public static var ' + filename.replace('-', '_') + 'ALPHA:Class;\n'
 	
 input.close()
 

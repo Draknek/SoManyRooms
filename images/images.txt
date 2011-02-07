@@ -1,10 +1,10 @@
 doorway 50 noalpha
 doorway-start 50 noalpha
 door 75
-plinth 50
+plinth nojpg
 gargoyle1 50
 gargoyle2 50
 gargoyle3 50
 gargoyle4 50
-player 80
+player nojpg
 light nojpg

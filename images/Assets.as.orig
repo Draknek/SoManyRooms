@@ -1,0 +1,41 @@
+package
+{
+	import flash.display.*;
+	import flash.geom.*;
+	
+	import net.flashpunk.*;
+	
+	public class Assets
+	{
+		public static function get (name:String): BitmapData
+		{
+			if (cache[name]) return cache[name];
+			
+			trace(name);
+			
+			var imageClass:Class = Assets[name + 'JPG'];
+			var alphaClass:Class = Assets[name + 'ALPHA'];
+			
+			if (! imageClass) return FP.getBitmap(alphaClass);
+			
+			var image:BitmapData = FP.getBitmap(imageClass);
+			
+			var output:BitmapData = new BitmapData(image.width, image.height, alphaClass != null);
+			
+			output.copyPixels(image, image.rect, FP.zero);
+			
+			if (alphaClass) {
+				output.copyChannel(FP.getBitmap(alphaClass), image.rect, FP.zero, BitmapDataChannel.RED, BitmapDataChannel.ALPHA);
+			}
+			
+			cache[name] = output;
+			
+			return output;
+		}
+		
+		private static var cache:Object = {};
+		
+!!! ASSETS GO HERE !!!
+
+	}
+}

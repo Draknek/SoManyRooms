@@ -1,0 +1,10 @@
+doorway noalpha
+doorway-start noalpha
+door
+plinth
+gargoyle1
+gargoyle2
+gargoyle3
+gargoyle4
+player
+light magic

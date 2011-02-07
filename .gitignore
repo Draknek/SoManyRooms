@@ -1,3 +1,6 @@
 *~
 .FW.*
 *.swf
+Assets.as
+images/jpg/*
+images/alpha/*

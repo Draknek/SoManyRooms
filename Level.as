@@ -28,33 +28,6 @@ package
 		[Embed(source = 'fonts/Frank Knows.ttf', embedAsCFF="false", fontFamily = 'gargoylefont')]
 		public static var GargoyleFont:Class;
 		
-		[Embed(source="images/doorway.jpg")]
-		public static var BgGfx:Class;
-		
-		[Embed(source="images/doorway-start.jpg")]
-		public static var BeginGfx:Class;
-		
-		[Embed(source="images/door.png")]
-		public static var DoorGfx:Class;
-		
-		[Embed(source="images/plinth.png")]
-		public static var PlinthGfx:Class;
-		
-		[Embed(source="images/gargoyle1.png")]
-		public static var Gargoyle1Gfx:Class;
-		[Embed(source="images/gargoyle2.png")]
-		public static var Gargoyle2Gfx:Class;
-		[Embed(source="images/gargoyle3.png")]
-		public static var Gargoyle3Gfx:Class;
-		[Embed(source="images/gargoyle4.png")]
-		public static var Gargoyle4Gfx:Class;
-		
-		[Embed(source="images/player.png")]
-		public static var PlayerGfx:Class;
-		
-		[Embed(source="images/light.png")]
-		public static var LightGfx:Class;
-		
 		public var musicSfx:Sfx;
 		public var doorSfx:Sfx;
 		public var resetSfx:Sfx;
@@ -98,7 +71,7 @@ package
 			
 			addGraphic(dark, -25);
 			
-			light = new Image(LightGfx);
+			light = new Image(Assets.get("light"));
 			light.color = 0xf1f09a;
 			light.centerOO();
 			light.alpha = 0.5;
@@ -122,14 +95,14 @@ package
 			addGraphic(black, -100);
 			addGraphic(red, -101);
 			
-			var bg:Backdrop = new Backdrop(BgGfx, true, false);
+			var bg:Backdrop = new Backdrop(Assets.get("doorway"), true, false);
 			bg.y = 22;
 			
 			addGraphic(bg);
 			
-			addGraphic(new Stamp(BeginGfx, 0, 22));
+			addGraphic(new Stamp(Assets.get("doorway_start"), 0, 22));
 			
-			var entryDoor:Image = new Image(DoorGfx);
+			var entryDoor:Image = new Image(Assets.get("door"));
 			entryDoor.x = 7;
 			entryDoor.y = 480 - 163;
 			entryDoor.smooth = true;
@@ -144,7 +117,7 @@ package
 				e.height = 163;
 				e.x = 135 + 7 + i*135;
 				e.y = 480 - e.height;
-				e.graphic = new Image(DoorGfx);
+				e.graphic = new Image(Assets.get("door"));
 				Image(e.graphic).smooth = true;
 				
 				if (i == 0) e.graphic.visible = false;
@@ -153,7 +126,7 @@ package
 				
 				add(e);
 				
-				var plinth:Spritemap = new Spritemap(PlinthGfx, 78, 51);
+				var plinth:Spritemap = new Spritemap(Assets.get("plinth"), 78, 51);
 				plinth.frame = i;
 				plinth.x = e.x - (plinth.width - e.width)*0.5;
 				plinth.y = e.y - plinth.height - 5 - FP.rand(10);
@@ -161,7 +134,7 @@ package
 				
 				if (i == 0) plinth.y = 400;
 				
-				var gargoyle:Stamp = new Stamp(FP.choose([Gargoyle1Gfx, Gargoyle2Gfx, Gargoyle3Gfx, Gargoyle4Gfx]));
+				var gargoyle:Stamp = new Stamp(Assets.get("gargoyle" + (FP.rand(4) + 1)));
 				
 				gargoyle.x = e.x - (gargoyle.width - e.width)*0.5;
 				gargoyle.y = plinth.y - gargoyle.height + 20;
@@ -209,7 +182,7 @@ package
 			player.x = startX + player.width*0.5;
 			player.y = 480 - player.height;
 			
-			sprite = new Spritemap(PlayerGfx, player.width, player.height);
+			sprite = new Spritemap(Assets.get("player"), player.width, player.height);
 			sprite.x = -30;
 			
 			player.graphic = sprite;

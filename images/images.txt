@@ -8,3 +8,4 @@ gargoyle3 50
 gargoyle4 50
 player nojpg
 light nojpg
+flame nojpg

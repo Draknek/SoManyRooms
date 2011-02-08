@@ -34,6 +34,7 @@ package
 		
 		public var player:Entity;
 		public var sprite:Spritemap;
+		public var flame:Spritemap;
 		public var walk:Number = 0;
 		
 		public const DOOR_COUNT:int = 10;
@@ -184,11 +185,17 @@ package
 			
 			sprite = new Spritemap(Assets.get("player"), player.width, player.height);
 			sprite.x = -30;
-			
-			player.graphic = sprite;
+
+			flame = new Spritemap(Assets.get("flame"), 14, 19);
+			flame.add("fire", [0,1,2,3], 0.3); 
+			flame.play("fire");
+			flame.x = 32;
+			flame.y = 16;
+
+			player.graphic = new Graphiclist(sprite, flame);
 			
 			add(player);
-			
+
 			FP.tween(black, {alpha: 0}, 120);
 			
 			FP.tween(entryDoor, {scaleX: 1.0}, 300);
@@ -257,6 +264,9 @@ package
 			if (player.x > maxX - 30) player.x = maxX - 30;
 			
 			camera.x = player.x - 320;
+
+			flame.update();
+			flame.x = sprite.flipped? -45: 32;
 			
 			if (camera.x < 0) camera.x = 0;
 			if (camera.x > maxX - 640) camera.x = maxX - 640;
